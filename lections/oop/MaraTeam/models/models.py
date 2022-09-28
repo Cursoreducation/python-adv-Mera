@@ -1,102 +1,54 @@
-import json
+from framework.models import Model
 
-class Plant:
+
+class Plant(Model):
     file = "plants.json"
 
     def __init__(self, name, location):
         self.name = name
         self.location = location
-    
-    @classmethod
-    def get_data(cls):
-        file = open("database/" + cls.file, "r")
-        data_in_json = file.read()
-        data = json.loads(data_in_json)
-        file.close()
-        return data
-
-    @classmethod
-    def get_all_plants(cls):
-        data = cls.get_data()
-        for plant in data:
-            print(plant["name"])
-            print(plant["location"])
-
-    @classmethod
-    def get_by_id(cls, id):
-        plants = cls.get_data()
-        counter = 0
-        for plant in plants:
-            if id == plant["id"]:
-                print(plant["name"])
-                print(plant["location"])
-                break
-            counter+=1
-            if counter == len(plants):
-                print("Not found plant with this id")
-
-            
-    
-    def save(self):
-        data = self.get_data()
-        new_plant = {"name": self.name, "location": self.location}
-        if len(data) > 0:
-            new_plant["id"] = data[-1]["id"] + 1
-        else:
-            new_plant["id"] = 1
-        data.append(new_plant)
-        file = open("database/" + self.file, "w")
-        data_in_json = json.dumps(data)
-        file.write(data_in_json)
 
 
+    def _protected_example(self):
+        return "protected"
 
 
-class Employee:
+    def __private_example(self):
+        return "private"
+
+
+class Employee(Model):
     file = "employees.json"
 
-    def __init__(self, name, plant_id):
+    def __init__(self, name, object_id, type_of_work):
         self.name = name
-        self.plant_id = plant_id
-    
-    @classmethod
-    def get_data(cls):
-        file = open("database/" + cls.file, "r")
-        data_in_json = file.read()
-        data = json.loads(data_in_json)
-        file.close()
-        return data
+        self.object_id = object_id
+        self.type_of_work = type_of_work
 
-    @classmethod
-    def get_all_employees(cls):
-        data = cls.get_data()
-        for employee in data:
-            print(employee["name"])
-            print(employee["plant_id"])
+    def get_work(self):
+        # Витягуєм данні про роботу
+        if self.type_of_work == "plant":
+            return Plant.get_by_id(self.object_id)
+        elif self.type_of_work == "salon":
+            return Salon.get_by_id(self.object_id)
+        else:
+            return {}
 
     @classmethod
     def get_by_id(cls, id):
-        employees = cls.get_data()
-        counter = 0
-        for employee in employees:
-            if id == employee["id"]:
-                print(employee["name"])
-                print(employee["plant_id"])
-                break
-            counter+=1
-            if counter == len(employees):
-                print("Not found plant with this id")
+        # Викликаєм батьківський метод get_by_id (get_by_id з класу Model)
+        employee_dict = super().get_by_id(id)
+        employee = Employee(employee_dict["name"], int(employee_dict["object_id"]), employee_dict["type_of_work"])
+        work_of_employee = employee.get_work()
+        cls.print_object([employee_dict])
+        print("Employee work: ")
+        cls.print_object([work_of_employee])
 
-            
-    
-    def save(self):
-        data = self.get_data()
-        new_employee = {"name": self.name, "plant_id": self.plant_id}
-        if len(data) > 0:
-            new_employee["id"] = data[-1]["id"] + 1
-        else:
-            new_employee["id"] = 1
-        data.append(new_employee)
-        file = open("database/" + self.file, "w")
-        data_in_json = json.dumps(data)
-        file.write(data_in_json)
+
+class Salon(Model):
+    file = "salons.json"
+
+    def __init__(self, name, address, size):
+        self.name = name
+        self.address = address
+        self.size = size

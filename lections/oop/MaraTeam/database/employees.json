@@ -1,1 +1,1 @@
-[{"name": "Nazar", "plant_id": "2", "id": 1}, {"name": "Taras", "plant_id": "1", "id": 2}]
+[{"name": "Taras Senko", "object_id": "2", "type_of_work": "plant", "id": 1}, {"name": "Lubomur Luzhnuy", "object_id": "1", "type_of_work": "salon", "id": 2}, {"name": "Ivan Nazarkavuch", "object_id": "5", "type_of_work": "plant", "id": 3}]

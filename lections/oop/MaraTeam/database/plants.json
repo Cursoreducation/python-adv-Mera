@@ -1,1 +1,1 @@
-[{"name": "Zavod1", "location": "Azov st.1", "id": 1}, {"name": "Zavod2", "location": "Azov st.2", "id": 2}, {"name": "Zavod3", "location": "Azov st.3", "id": 3}]
+[{"name": "Zavod1", "location": "Azov st.1", "id": 1}, {"name": "Zavod2", "location": "Azov st.2", "id": 2}, {"name": "Zavod3", "location": "Azov st.3", "id": 3}, {"name": "Test", "location": "Kek", "id": 4}, {"name": "test", "location": "kek", "id": 5}]
