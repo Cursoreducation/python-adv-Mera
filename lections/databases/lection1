@@ -1,0 +1,491 @@
+mysql> CREATE DATABASE school;
+Query OK, 1 row affected (0,01 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| school             |
+| sys                |
++--------------------+
+5 rows in set (0,00 sec)
+
+mysql> USE school;
+Database changed
+mysql> CREATE TABLE teachers (id INT AUTO_INCREMENT PRIMARY KEY, first_name CHAR(255) NOT NULL, last_name CHAR(255) NOT NULL, email CHAR(255) NOT NULL);
+Query OK, 0 rows affected (0,01 sec)
+
+mysql> SHOW TABLES;
++------------------+
+| Tables_in_school |
++------------------+
+| teachers         |
++------------------+
+1 row in set (0,00 sec)
+
+mysql> SHOW COLUMNS FROM teachers;
++------------+-----------+------+-----+---------+----------------+
+| Field      | Type      | Null | Key | Default | Extra          |
++------------+-----------+------+-----+---------+----------------+
+| id         | int       | NO   | PRI | NULL    | auto_increment |
+| first_name | char(255) | NO   |     | NULL    |                |
+| last_name  | char(255) | NO   |     | NULL    |                |
+| email      | char(255) | NO   |     | NULL    |                |
++------------+-----------+------+-----+---------+----------------+
+4 rows in set (0,00 sec)
+
+mysql> INSERT INTO teachers (first_name, last_name, email) VALUES ("Kateryna", "Samotiy", "samotiy@gmail.com");
+Query OK, 1 row affected (0,01 sec)
+
+mysql> SELECT * FROM teachers;
++----+------------+-----------+-------------------+
+| id | first_name | last_name | email             |
++----+------------+-----------+-------------------+
+|  1 | Kateryna   | Samotiy   | samotiy@gmail.com |
++----+------------+-----------+-------------------+
+1 row in set (0,00 sec)
+
+mysql> INSERT INTO teachers (first_name, last_name, email) VALUES ("Victoriya", "Sagaydachna", "sagaydachna@gmail.com"), ("Natalia", "Khmelnutska", "khmelnutska@gmail.com");
+Query OK, 2 rows affected (0,01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM teachers;
++----+------------+-------------+-----------------------+
+| id | first_name | last_name   | email                 |
++----+------------+-------------+-----------------------+
+|  1 | Kateryna   | Samotiy     | samotiy@gmail.com     |
+|  2 | Victoriya  | Sagaydachna | sagaydachna@gmail.com |
+|  3 | Natalia    | Khmelnutska | khmelnutska@gmail.com |
++----+------------+-------------+-----------------------+
+3 rows in set (0,00 sec)
+
+mysql> SELECT first_name FROM teachers;
++------------+
+| first_name |
++------------+
+| Kateryna   |
+| Victoriya  |
+| Natalia    |
++------------+
+3 rows in set (0,00 sec)
+
+mysql> SELECT first_name, last_name FROM teachers;
++------------+-------------+
+| first_name | last_name   |
++------------+-------------+
+| Kateryna   | Samotiy     |
+| Victoriya  | Sagaydachna |
+| Natalia    | Khmelnutska |
++------------+-------------+
+3 rows in set (0,00 sec)
+
+mysql> SELECT * FROM teachers;
++----+------------+-------------+-----------------------+
+| id | first_name | last_name   | email                 |
++----+------------+-------------+-----------------------+
+|  1 | Kateryna   | Samotiy     | samotiy@gmail.com     |
+|  2 | Victoriya  | Sagaydachna | sagaydachna@gmail.com |
+|  3 | Natalia    | Khmelnutska | khmelnutska@gmail.com |
++----+------------+-------------+-----------------------+
+3 rows in set (0,00 sec)
+
+mysql> CREATE TABLE students(id INT PRIMARY KEY AUTO_INCREMENT, first_name CHAR(255), last_name CHAR(255), teacher_id INT NOT NULL, class_id INT NOT NULL);
+Query OK, 0 rows affected (0,02 sec)
+
+mysql> CREATE TABLE classes (id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(255), teacher_id INT NOT NULL);
+Query OK, 0 rows affected (0,02 sec)
+
+mysql> SHOW TABLES;
++------------------+
+| Tables_in_school |
++------------------+
+| classes          |
+| students         |
+| teachers         |
++------------------+
+3 rows in set (0,00 sec)
+
+mysql> SHOW COLUMNS FROM classes;
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| id         | int          | NO   | PRI | NULL    | auto_increment |
+| name       | varchar(255) | YES  |     | NULL    |                |
+| teacher_id | int          | NO   |     | NULL    |                |
++------------+--------------+------+-----+---------+----------------+
+3 rows in set (0,00 sec)
+
+mysql> SHOW COLUMNS FROM students;
++------------+-----------+------+-----+---------+----------------+
+| Field      | Type      | Null | Key | Default | Extra          |
++------------+-----------+------+-----+---------+----------------+
+| id         | int       | NO   | PRI | NULL    | auto_increment |
+| first_name | char(255) | YES  |     | NULL    |                |
+| last_name  | char(255) | YES  |     | NULL    |                |
+| teacher_id | int       | NO   |     | NULL    |                |
+| class_id   | int       | NO   |     | NULL    |                |
++------------+-----------+------+-----+---------+----------------+
+5 rows in set (0,01 sec)
+
+mysql> INSERT INTO classes(name, teacher_id) VALUES ("1-a", 1), ("2-a", 2), ("7-a", 3);
+Query OK, 3 rows affected (0,01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM classess;
+ERROR 1146 (42S02): Table 'school.classess' doesn't exist
+mysql> SELECT * FROM clasess;
+ERROR 1146 (42S02): Table 'school.clasess' doesn't exist
+mysql> SELECT * FROM classes;
++----+------+------------+
+| id | name | teacher_id |
++----+------+------------+
+|  1 | 1-a  |          1 |
+|  2 | 2-a  |          2 |
+|  3 | 7-a  |          3 |
++----+------+------------+
+3 rows in set (0,00 sec)
+
+mysql> ALTER TABLE students REMOVE COLUMN teacher_id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'COLUMN teacher_id' at line 1
+mysql> ALTER TABLE students REMOVE COLUMNS teacher_id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'COLUMNS teacher_id' at line 1
+mysql> ALTER TABLE students DROP COLUMNS teacher_id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'teacher_id' at line 1
+mysql> ALTER TABLE students DROP COLUMN teacher_id;
+Query OK, 0 rows affected (0,02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SHOW COLUMNS FROM students;
++------------+-----------+------+-----+---------+----------------+
+| Field      | Type      | Null | Key | Default | Extra          |
++------------+-----------+------+-----+---------+----------------+
+| id         | int       | NO   | PRI | NULL    | auto_increment |
+| first_name | char(255) | YES  |     | NULL    |                |
+| last_name  | char(255) | YES  |     | NULL    |                |
+| class_id   | int       | NO   |     | NULL    |                |
++------------+-----------+------+-----+---------+----------------+
+4 rows in set (0,01 sec)
+
+mysql> INSERT INTO students (first_name, last_name, class) VALUES ("Ivan", "Golovin", 1), ("Petro", "Sagaydachuy", 2), ("Bogdan", "Khmelnutskuy", 3);
+ERROR 1054 (42S22): Unknown column 'class' in 'field list'
+mysql> INSERT INTO students (first_name, last_name, class_id) VALUES ("Ivan", "Golovin", 1), ("Petro", "Sagaydachuy", 2), ("Bogdan", "Khmelnutskuy", 3);
+Query OK, 3 rows affected (0,01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM students;
++----+------------+--------------+----------+
+| id | first_name | last_name    | class_id |
++----+------------+--------------+----------+
+|  1 | Ivan       | Golovin      |        1 |
+|  2 | Petro      | Sagaydachuy  |        2 |
+|  3 | Bogdan     | Khmelnutskuy |        3 |
++----+------------+--------------+----------+
+3 rows in set (0,00 sec)
+
+mysql> SELECT * FROM classes;
++----+------+------------+
+| id | name | teacher_id |
++----+------+------------+
+|  1 | 1-a  |          1 |
+|  2 | 2-a  |          2 |
+|  3 | 7-a  |          3 |
++----+------+------------+
+3 rows in set (0,00 sec)
+
+mysql> CREATE TABLE rooms(id INT PRIMARY KEY, AUTO_INCREMENT, number INT NOT NULL);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', number INT NOT NULL)' at line 1
+mysql> CREATE TABLE rooms(id INT PRIMARY KEY AUTO_INCREMENT, number INT NOT NULL);
+Query OK, 0 rows affected (0,01 sec)
+
+mysql> SHOW TABLES;
++------------------+
+| Tables_in_school |
++------------------+
+| classes          |
+| rooms            |
+| students         |
+| teachers         |
++------------------+
+4 rows in set (0,00 sec)
+
+mysql> INSERT INTO rooms(number) VALUES (1), (2), (3), (4), (5), (6), (7), (10);
+Query OK, 8 rows affected (0,01 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM rooms
+    -> ;
++----+--------+
+| id | number |
++----+--------+
+|  1 |      1 |
+|  2 |      2 |
+|  3 |      3 |
+|  4 |      4 |
+|  5 |      5 |
+|  6 |      6 |
+|  7 |      7 |
+|  8 |     10 |
++----+--------+
+8 rows in set (0,00 sec)
+
+mysql> CREATE TABLE room_class(id INT PRIMARY KEY AUTO_INCREMENT, class_id INT NOT NULL, room_id INT NOT NULL);
+Query OK, 0 rows affected (0,01 sec)
+
+mysql> INSERT INTO room_class(class_id, room_id) VALUES (1,2), (1,3), (1,5), (2,1),(2,3),(3,6),(3,7),(3,8);
+Query OK, 8 rows affected (0,01 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> select * from room_class;
++----+----------+---------+
+| id | class_id | room_id |
++----+----------+---------+
+|  1 |        1 |       2 |
+|  2 |        1 |       3 |
+|  3 |        1 |       5 |
+|  4 |        2 |       1 |
+|  5 |        2 |       3 |
+|  6 |        3 |       6 |
+|  7 |        3 |       7 |
+|  8 |        3 |       8 |
++----+----------+---------+
+8 rows in set (0,00 sec)
+
+mysql> SELECT * FROM classes INNER JOIN teachers ON classes.teacher_id = teachers.id;
++----+------+------------+----+------------+-------------+-----------------------+
+| id | name | teacher_id | id | first_name | last_name   | email                 |
++----+------+------------+----+------------+-------------+-----------------------+
+|  1 | 1-a  |          1 |  1 | Kateryna   | Samotiy     | samotiy@gmail.com     |
+|  2 | 2-a  |          2 |  2 | Victoriya  | Sagaydachna | sagaydachna@gmail.com |
+|  3 | 7-a  |          3 |  3 | Natalia    | Khmelnutska | khmelnutska@gmail.com |
++----+------+------------+----+------------+-------------+-----------------------+
+3 rows in set (0,00 sec)
+
+mysql> SELECT * FROM classes INNER JOIN teachers ON classes.teacher_id = teachers.id WHERE classes.name = "1-a";
++----+------+------------+----+------------+-----------+-------------------+
+| id | name | teacher_id | id | first_name | last_name | email             |
++----+------+------------+----+------------+-----------+-------------------+
+|  1 | 1-a  |          1 |  1 | Kateryna   | Samotiy   | samotiy@gmail.com |
++----+------+------------+----+------------+-----------+-------------------+
+1 row in set (0,00 sec)
+
+mysql> INSERT INTO classes(name, teacher_id) VALUES ("8-a", 4);
+Query OK, 1 row affected (0,01 sec)
+
+mysql> SELECT * FROM classes INNER JOIN teachers ON classes.teacher_id = teachers.id;
++----+------+------------+----+------------+-------------+-----------------------+
+| id | name | teacher_id | id | first_name | last_name   | email                 |
++----+------+------------+----+------------+-------------+-----------------------+
+|  1 | 1-a  |          1 |  1 | Kateryna   | Samotiy     | samotiy@gmail.com     |
+|  2 | 2-a  |          2 |  2 | Victoriya  | Sagaydachna | sagaydachna@gmail.com |
+|  3 | 7-a  |          3 |  3 | Natalia    | Khmelnutska | khmelnutska@gmail.com |
++----+------+------------+----+------------+-------------+-----------------------+
+3 rows in set (0,00 sec)
+
+mysql> SELECT * FROM classes LEFT JOIN teachers ON classes.teacher_id = teachers.id;
++----+------+------------+------+------------+-------------+-----------------------+
+| id | name | teacher_id | id   | first_name | last_name   | email                 |
++----+------+------------+------+------------+-------------+-----------------------+
+|  1 | 1-a  |          1 |    1 | Kateryna   | Samotiy     | samotiy@gmail.com     |
+|  2 | 2-a  |          2 |    2 | Victoriya  | Sagaydachna | sagaydachna@gmail.com |
+|  3 | 7-a  |          3 |    3 | Natalia    | Khmelnutska | khmelnutska@gmail.com |
+|  4 | 8-a  |          4 | NULL | NULL       | NULL        | NULL                  |
++----+------+------------+------+------------+-------------+-----------------------+
+4 rows in set (0,00 sec)
+
+mysql> SELECT * FROM classes RIGHT JOIN teachers ON classes.teacher_id = teachers.id;
++------+------+------------+----+------------+-------------+-----------------------+
+| id   | name | teacher_id | id | first_name | last_name   | email                 |
++------+------+------------+----+------------+-------------+-----------------------+
+|    1 | 1-a  |          1 |  1 | Kateryna   | Samotiy     | samotiy@gmail.com     |
+|    2 | 2-a  |          2 |  2 | Victoriya  | Sagaydachna | sagaydachna@gmail.com |
+|    3 | 7-a  |          3 |  3 | Natalia    | Khmelnutska | khmelnutska@gmail.com |
++------+------+------------+----+------------+-------------+-----------------------+
+3 rows in set (0,00 sec)
+
+mysql> INSERT INTO teachers (first_name, last_name, email) VALUES ("Anna", "Mikhaylova", "mm@gmail.com");
+Query OK, 1 row affected (0,00 sec)
+
+mysql> INSERT INTO teachers (first_name, last_name, email) VALUES ("Irina", "Mikhaylova", "aa@test.com");
+Query OK, 1 row affected (0,00 sec)
+
+mysql> SELECT * FROM classes RIGHT JOIN teachers ON classes.teacher_id = teachers.id;
++------+------+------------+----+------------+-------------+-----------------------+
+| id   | name | teacher_id | id | first_name | last_name   | email                 |
++------+------+------------+----+------------+-------------+-----------------------+
+|    1 | 1-a  |          1 |  1 | Kateryna   | Samotiy     | samotiy@gmail.com     |
+|    2 | 2-a  |          2 |  2 | Victoriya  | Sagaydachna | sagaydachna@gmail.com |
+|    3 | 7-a  |          3 |  3 | Natalia    | Khmelnutska | khmelnutska@gmail.com |
+|    4 | 8-a  |          4 |  4 | Anna       | Mikhaylova  | mm@gmail.com          |
+| NULL | NULL |       NULL |  5 | Irina      | Mikhaylova  | aa@test.com           |
++------+------+------------+----+------------+-------------+-----------------------+
+5 rows in set (0,00 sec)
+
+mysql> SELECT * FROM classes LEFT JOIN teachers ON classes.teacher_id = teachers.id;
++----+------+------------+------+------------+-------------+-----------------------+
+| id | name | teacher_id | id   | first_name | last_name   | email                 |
++----+------+------------+------+------------+-------------+-----------------------+
+|  1 | 1-a  |          1 |    1 | Kateryna   | Samotiy     | samotiy@gmail.com     |
+|  2 | 2-a  |          2 |    2 | Victoriya  | Sagaydachna | sagaydachna@gmail.com |
+|  3 | 7-a  |          3 |    3 | Natalia    | Khmelnutska | khmelnutska@gmail.com |
+|  4 | 8-a  |          4 |    4 | Anna       | Mikhaylova  | mm@gmail.com          |
++----+------+------------+------+------------+-------------+-----------------------+
+4 rows in set (0,00 sec)
+
+mysql> SELECT * FROM classes RIGHT JOIN teachers ON classes.teacher_id = teachers.id;
++------+------+------------+----+------------+-------------+-----------------------+
+| id   | name | teacher_id | id | first_name | last_name   | email                 |
++------+------+------------+----+------------+-------------+-----------------------+
+|    1 | 1-a  |          1 |  1 | Kateryna   | Samotiy     | samotiy@gmail.com     |
+|    2 | 2-a  |          2 |  2 | Victoriya  | Sagaydachna | sagaydachna@gmail.com |
+|    3 | 7-a  |          3 |  3 | Natalia    | Khmelnutska | khmelnutska@gmail.com |
+|    4 | 8-a  |          4 |  4 | Anna       | Mikhaylova  | mm@gmail.com          |
+| NULL | NULL |       NULL |  5 | Irina      | Mikhaylova  | aa@test.com           |
++------+------+------------+----+------------+-------------+-----------------------+
+5 rows in set (0,00 sec)
+
+mysql> SELECT * FROM classes INNER JOIN teachers ON classes.teacher_id = teachers.id;
++----+------+------------+----+------------+-------------+-----------------------+
+| id | name | teacher_id | id | first_name | last_name   | email                 |
++----+------+------------+----+------------+-------------+-----------------------+
+|  1 | 1-a  |          1 |  1 | Kateryna   | Samotiy     | samotiy@gmail.com     |
+|  2 | 2-a  |          2 |  2 | Victoriya  | Sagaydachna | sagaydachna@gmail.com |
+|  3 | 7-a  |          3 |  3 | Natalia    | Khmelnutska | khmelnutska@gmail.com |
+|  4 | 8-a  |          4 |  4 | Anna       | Mikhaylova  | mm@gmail.com          |
++----+------+------------+----+------------+-------------+-----------------------+
+4 rows in set (0,00 sec)
+
+mysql> SELECT * FROM classes FULL JOIN teachers ON classes.teacher_id = teachers.id;
+ERROR 1054 (42S22): Unknown column 'classes.teacher_id' in 'on clause'
+mysql> SELECT * FROM classes INNER JOIN room_class rc ON classess.id = rc.class_id INNER JOIN room ON room.id=rc.room_id;
+ERROR 1146 (42S02): Table 'school.room' doesn't exist
+mysql> SELECT * FROM classes INNER JOIN room_class rc ON classess.id = rc.class_id INNER JOIN rooms ON rooms.id=rc.room_id;
+ERROR 1054 (42S22): Unknown column 'classess.id' in 'on clause'
+mysql> SELECT * FROM classes INNER JOIN room_class rc ON classes.id = rc.class_id INNER JOIN rooms ON rooms.id=rc.room_id;
++----+------+------------+----+----------+---------+----+--------+
+| id | name | teacher_id | id | class_id | room_id | id | number |
++----+------+------------+----+----------+---------+----+--------+
+|  1 | 1-a  |          1 |  1 |        1 |       2 |  2 |      2 |
+|  1 | 1-a  |          1 |  2 |        1 |       3 |  3 |      3 |
+|  1 | 1-a  |          1 |  3 |        1 |       5 |  5 |      5 |
+|  2 | 2-a  |          2 |  4 |        2 |       1 |  1 |      1 |
+|  2 | 2-a  |          2 |  5 |        2 |       3 |  3 |      3 |
+|  3 | 7-a  |          3 |  6 |        3 |       6 |  6 |      6 |
+|  3 | 7-a  |          3 |  7 |        3 |       7 |  7 |      7 |
+|  3 | 7-a  |          3 |  8 |        3 |       8 |  8 |     10 |
++----+------+------------+----+----------+---------+----+--------+
+8 rows in set (0,00 sec)
+
+mysql> SELECT * FROM classes LEFT JOIN room_class rc ON classes.id = rc.class_id INNER JOIN rooms ON rooms.id=rc.room_id;
++----+------+------------+------+----------+---------+----+--------+
+| id | name | teacher_id | id   | class_id | room_id | id | number |
++----+------+------------+------+----------+---------+----+--------+
+|  1 | 1-a  |          1 |    1 |        1 |       2 |  2 |      2 |
+|  1 | 1-a  |          1 |    2 |        1 |       3 |  3 |      3 |
+|  1 | 1-a  |          1 |    3 |        1 |       5 |  5 |      5 |
+|  2 | 2-a  |          2 |    4 |        2 |       1 |  1 |      1 |
+|  2 | 2-a  |          2 |    5 |        2 |       3 |  3 |      3 |
+|  3 | 7-a  |          3 |    6 |        3 |       6 |  6 |      6 |
+|  3 | 7-a  |          3 |    7 |        3 |       7 |  7 |      7 |
+|  3 | 7-a  |          3 |    8 |        3 |       8 |  8 |     10 |
++----+------+------------+------+----------+---------+----+--------+
+8 rows in set (0,00 sec)
+
+mysql> SELECT * FROM classes RIGHT JOIN room_class rc ON classes.id = rc.class_id INNER JOIN rooms ON rooms.id=rc.room_id;
++------+------+------------+----+----------+---------+----+--------+
+| id   | name | teacher_id | id | class_id | room_id | id | number |
++------+------+------------+----+----------+---------+----+--------+
+|    1 | 1-a  |          1 |  1 |        1 |       2 |  2 |      2 |
+|    1 | 1-a  |          1 |  2 |        1 |       3 |  3 |      3 |
+|    1 | 1-a  |          1 |  3 |        1 |       5 |  5 |      5 |
+|    2 | 2-a  |          2 |  4 |        2 |       1 |  1 |      1 |
+|    2 | 2-a  |          2 |  5 |        2 |       3 |  3 |      3 |
+|    3 | 7-a  |          3 |  6 |        3 |       6 |  6 |      6 |
+|    3 | 7-a  |          3 |  7 |        3 |       7 |  7 |      7 |
+|    3 | 7-a  |          3 |  8 |        3 |       8 |  8 |     10 |
++------+------+------------+----+----------+---------+----+--------+
+8 rows in set (0,00 sec)
+
+mysql> SELECT * FROM classes INNER JOIN room_class rc ON classes.id = rc.class_id LEFT JOIN rooms ON rooms.id=rc.room_id;
++----+------+------------+----+----------+---------+------+--------+
+| id | name | teacher_id | id | class_id | room_id | id   | number |
++----+------+------------+----+----------+---------+------+--------+
+|  1 | 1-a  |          1 |  1 |        1 |       2 |    2 |      2 |
+|  1 | 1-a  |          1 |  2 |        1 |       3 |    3 |      3 |
+|  1 | 1-a  |          1 |  3 |        1 |       5 |    5 |      5 |
+|  2 | 2-a  |          2 |  4 |        2 |       1 |    1 |      1 |
+|  2 | 2-a  |          2 |  5 |        2 |       3 |    3 |      3 |
+|  3 | 7-a  |          3 |  6 |        3 |       6 |    6 |      6 |
+|  3 | 7-a  |          3 |  7 |        3 |       7 |    7 |      7 |
+|  3 | 7-a  |          3 |  8 |        3 |       8 |    8 |     10 |
++----+------+------------+----+----------+---------+------+--------+
+8 rows in set (0,00 sec)
+
+mysql> SELECT * FROM classes INNER JOIN room_class rc ON classes.id = rc.class_id RIGHT JOIN rooms ON rooms.id=rc.room_id;
++------+------+------------+------+----------+---------+----+--------+
+| id   | name | teacher_id | id   | class_id | room_id | id | number |
++------+------+------------+------+----------+---------+----+--------+
+|    2 | 2-a  |          2 |    4 |        2 |       1 |  1 |      1 |
+|    1 | 1-a  |          1 |    1 |        1 |       2 |  2 |      2 |
+|    1 | 1-a  |          1 |    2 |        1 |       3 |  3 |      3 |
+|    2 | 2-a  |          2 |    5 |        2 |       3 |  3 |      3 |
+| NULL | NULL |       NULL | NULL |     NULL |    NULL |  4 |      4 |
+|    1 | 1-a  |          1 |    3 |        1 |       5 |  5 |      5 |
+|    3 | 7-a  |          3 |    6 |        3 |       6 |  6 |      6 |
+|    3 | 7-a  |          3 |    7 |        3 |       7 |  7 |      7 |
+|    3 | 7-a  |          3 |    8 |        3 |       8 |  8 |     10 |
++------+------+------------+------+----------+---------+----+--------+
+9 rows in set (0,00 sec)
+
+mysql> SELECT * FROM teachers;
++----+------------+-------------+-----------------------+
+| id | first_name | last_name   | email                 |
++----+------------+-------------+-----------------------+
+|  1 | Kateryna   | Samotiy     | samotiy@gmail.com     |
+|  2 | Victoriya  | Sagaydachna | sagaydachna@gmail.com |
+|  3 | Natalia    | Khmelnutska | khmelnutska@gmail.com |
+|  4 | Anna       | Mikhaylova  | mm@gmail.com          |
+|  5 | Irina      | Mikhaylova  | aa@test.com           |
++----+------------+-------------+-----------------------+
+5 rows in set (0,00 sec)
+
+mysql> SELECT * FROM teachers WHERE email="aa@test.com";
++----+------------+------------+-------------+
+| id | first_name | last_name  | email       |
++----+------------+------------+-------------+
+|  5 | Irina      | Mikhaylova | aa@test.com |
++----+------------+------------+-------------+
+1 row in set (0,00 sec)
+
+mysql> SELECT * FROM teachers WHERE email="aa@test.com" OR email="`mm@gmail.com";
++----+------------+------------+-------------+
+| id | first_name | last_name  | email       |
++----+------------+------------+-------------+
+|  5 | Irina      | Mikhaylova | aa@test.com |
++----+------------+------------+-------------+
+1 row in set (0,00 sec)
+
+mysql> SELECT * FROM teachers WHERE email="aa@test.com" OR email="mm@gmail.com";
++----+------------+------------+--------------+
+| id | first_name | last_name  | email        |
++----+------------+------------+--------------+
+|  4 | Anna       | Mikhaylova | mm@gmail.com |
+|  5 | Irina      | Mikhaylova | aa@test.com  |
++----+------------+------------+--------------+
+2 rows in set (0,00 sec)
+
+mysql> UPDATE teachers set email="ira@test.com" WHERE id=5;
+Query OK, 1 row affected (0,01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM teachers WHERE id=5;
++----+------------+------------+--------------+
+| id | first_name | last_name  | email        |
++----+------------+------------+--------------+
+|  5 | Irina      | Mikhaylova | ira@test.com |
++----+------------+------------+--------------+
+1 row in set (0,00 sec)
+
+
