@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/app/Dockerfile
+    volumes:
+      - ./:/app
+    networks:
+      - app-network
+
+  db:
+    image: mysql:8.0
+    ports:
+      - 3308:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    networks:
+      - app-network
+    volumes:
+      - ./docker/data:/var/lib/mysql
+
+
+networks:
+  app-network:
+    driver: bridge
+
+#volumes:
+#  mydata:

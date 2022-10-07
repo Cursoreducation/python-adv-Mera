@@ -1,4 +1,4 @@
 1. Add class_id to table rozklad
 2. Rework this query to work with class_in in rozklad (not at room_class)
 SELECT t.first_name, t.last_name, l.name, r.number, c.name, rozklad.time FROM rozklad INNER JOIN lessons l ON l.id=rozklad.lesson_id INNER JOIN teachers t ON t.id=rozklad.teacher_id INNER JOIN rooms r ON
- r.id=rozklad.room_id INNER JOIN room_class rc ON rc.room_id=r.id INNER JOIN classes c ON c.id=rc.class_id WHERE time BETWEEN "11:00:00" AND "13:00:00";
+ r.id=rozklad.room_id INNER JOIN room_class rc ON rc.room_id=r.id INNER JOIN classes c ON dockc.id=rc.class_id WHERE time BETWEEN "11:00:00" AND "13:00:00";
