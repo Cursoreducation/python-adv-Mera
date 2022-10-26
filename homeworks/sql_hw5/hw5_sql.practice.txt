@@ -1,0 +1,9 @@
+﻿1. Add class_id to table rozklad:
+
+mysql> UPDATE rozklad SET class_id = 1 where id = 1;
+mysql> UPDATE rozklad SET class_id = 1 where id = 2;
+mysql> UPDATE rozklad SET class_id = 2 where id = 3;
+mysql> UPDATE rozklad SET class_id = 3 where id = 4;
+
+2. Rework this query to work with class_in in rozklad (not at room_class):
+mysql> SELECT t.first_name, t.last_name, l.name, r.number, c.name, rozklad.time FROM rozklad INNER JOIN lessons l ON l.id=rozklad.lesson_id INNER JOIN teachers t ON t.id=rozklad.teacher_id INNER JOIN rooms r ON r.id=rozklad.room_id INNER JOIN classes c ON c.id=rozklad.class_id WHERE time BETWEEN "11:00:00" AND "13:00:00";
