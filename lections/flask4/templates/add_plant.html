@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container">
+        <form {% if plant %} action="/update-plant/{{ plant.id }}" {% else %}action="/save-plant" {% endif %} method="POST">
+            <div class="mb-3">
+              <label for="name" class="form-label">Name:</label>
+              <input type="text" name="name" class="form-control" {% if plant %} value="{{plant.title}}" {% endif %} id="name" placeholder="Test test">
+            </div>
+            <div class="mb-3">
+              <label for="location" class="form-label">Location: </label>
+              <textarea class="form-control" name="location" id="location" rows="3">{% if plant %}{{ plant.location }}{% endif %}</textarea>
+            </div>
+            {% if employees %}
+            <select class="form-select form-select-lg mb-3" multiple name="employees" aria-label="multiple select example">
+                {% for employee in employees %}
+                    <option value="{{ employee.id }}" {% if plant %}
+                            {% for plant_employee in plant.employees %}
+                                {% if employee.id == plant_employee.id %}
+                                    selected
+                                {% endif %}
+                            {% endfor %}
+                            {% endif %}
+                    >{{ employee.first_name }} {{ employee.last_name }}</option>
+                {% endfor %}
+            </select>
+            {% endif %}
+              <div class="col-auto">
+                <button type="submit" class="btn btn-primary mb-3">Submit</button>
+              </div>
+        </form>
+    </div>
+{% endblock %}
