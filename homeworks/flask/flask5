@@ -1,0 +1,1 @@
+1. Add validation of data to registration.

@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+    web:
+        build:
+          dockerfile: ./docker/python/Dockerfile
+          context: ./
+        container_name: "flask5-web"
+        ports:
+            - "5000:5000"
+        volumes:
+            - .:/code
+        env_file: ".env"
+        networks:
+          - app
+
+
+    database:
+      image: mysql:8.0
+      container_name: "flask5"
+      environment:
+        MYSQL_ROOT_PASSWORD: "root"
+        MYSQL_DATABASE: "flask"
+        MYSQL_USERNAME: "flask"
+        MYSQL_PASSWORD: "flask"
+      ports:
+        - 3311:3306
+      volumes:
+        - ./docker/mysql:/var/lib/mysql
+      networks:
+        - app
+
+
+networks:
+  app:
+    driver: bridge

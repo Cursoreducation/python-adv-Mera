@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container">
+        <form action="/add-employee" method="POST">
+            <div class="mb-3">
+              <label for="first_name" class="form-label">First Name:</label>
+              <input type="text" name="first_name" class="form-control"  id="first_name" placeholder="Test test">
+            </div>
+            <div class="mb-3">
+              <label for="last_name" class="form-label">Last Name:</label>
+              <input type="text" name="last_name" class="form-control"  id="last_name" placeholder="Test test">
+            </div>
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="basic-addon1">@</span>
+              <input type="email" class="form-control" name="email" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1">
+            </div>
+                <select class="form-select form-select-lg mb-3" name="plant_id" aria-label="multiple select example">
+                    {% for plant in plants %}
+                        <option value="{{ plant.id }}">{{ plant.title }}</option>
+                    {% endfor %}
+                </select>
+              <div class="col-auto">
+                <button type="submit" class="btn btn-primary mb-3">Submit</button>
+              </div>
+        </form>
+    </div>
+
+{% endblock %}
