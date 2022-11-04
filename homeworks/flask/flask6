@@ -1,0 +1,1 @@
+1. Create api endpoints for plant crud (CREATE, READ, UPDATE, DELETE)

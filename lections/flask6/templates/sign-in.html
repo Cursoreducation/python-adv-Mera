@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block additional_styles %}
+    <link rel="stylesheet" href="/static/css/sign-up.css">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card">
+                <h2 class="card-title text-center">Sign In</h2>
+                <div class="card-body py-md-4">
+                    <form action="/sign-in" method="post">
+                        <div class="form-group">
+                            <input type="text" required class="form-control" name="email" id="email" placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" required name="password" class="form-control" id="password" placeholder="Password">
+                        </div>
+<!--                        <div class="form-group">-->
+<!--                            <input type="password" class="form-control" id="confirm-password"-->
+<!--                                   placeholder="confirm-password">-->
+<!--                        </div>-->
+                        <div class="d-flex flex-row align-items-center justify-content-between">
+                            <a href="/sign-up">Sign Up</a>
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
