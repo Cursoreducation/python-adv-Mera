@@ -1,17 +1,9 @@
 from flask import Flask
-from flask import render_template
 app = Flask(__name__)
 
+with app.app_context():
+    from routes.main import *
 
-@app.route('/')
-def main():
-    return render_template('calc_main.html')
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", debug=True)
 
-
-@app.route('/calc/<int:x>/<int:y>')
-def calc_sum(x, y):
-    return render_template('calc.html', x=x, sign='+', y=y, res=x+y)
-
-
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
