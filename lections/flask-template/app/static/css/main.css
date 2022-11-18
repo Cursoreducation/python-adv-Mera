@@ -1,0 +1,10 @@
+/* custom css */
+
+html,
+body {
+  height: 110%;
+  width: auto;
+}
+* {
+    border-radius: 0 !important;
+}
