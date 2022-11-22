@@ -5,3 +5,4 @@ from .auth import (
     ForgotPasswordForm,
     PasswordResetForm,
 )
+from .upload import UploadForm
