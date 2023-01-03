@@ -1,0 +1,33 @@
+version: "3.8"
+services:
+  db:
+    image: postgres:14
+    restart: unless-stopped
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${DB_NAME:-db}
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWD:-secret}
+    ports:
+      - 127.0.0.1:${DB_PORT:-5432}:5432
+  web:
+    build: .
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - staticfiles:/usr/src/app/staticfiles/
+      - media:/usr/src/app/media/
+    depends_on:
+      - db
+    environment:
+      DEBUG: 0
+      DATABASE_URL: postgresql://${DB_USER:-postgres}:${DB_PASSWD:-secret}@db:5432/${DB_NAME:-db}
+    ports:
+      - 127.0.0.1:${LOCAL_PORT:-8000}:8000
+
+volumes:
+  dbdata:
+  staticfiles:
+  media:
