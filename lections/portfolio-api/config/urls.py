@@ -33,6 +33,7 @@ schema_view = get_schema_view(
 
 api_urlpatterns = [
     path("accounts/", include("apps.accounts.urls"), name="accounts"),
+    path("portfolio/", include("apps.portfolio.urls"), name="portfolio"),
 ]
 
 urlpatterns = [

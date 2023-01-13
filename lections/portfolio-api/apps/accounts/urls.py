@@ -10,6 +10,8 @@ urlpatterns = [
     path("login/", token_obtain_pair, name="token-obtain-pair"),
     path("login/refresh/", token_refresh, name="token-refresh"),
     path("register/", register, name="register"),
+    path("change_password/", change_password, name="change_password"),
+    path("update_profile/", update_profile, name="update_profile"),
     path("destroy/", delete_profile, name="delete"),
     path("logout/", logout, name="logout"),
 ]

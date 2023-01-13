@@ -7,7 +7,11 @@ from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .permissions import IsOwnerOrReadOnly
-from .serializers import RegisterSerializer
+from .serializers import (
+    RegisterSerializer,
+    ChangePasswordSerializer,
+    UpdateUserSerializer,
+)
 
 
 User = get_user_model()
@@ -19,19 +23,24 @@ class RegisterAPIView(CreateAPIView):
     serializer_class = RegisterSerializer
 
 
-class ChangePasswordAPIView(APIView):
+class ChangePasswordAPIView(UpdateAPIView):
     queryset = User.objects.all()
-    permission_classes = (IsAuthenticated,)
-    serializer_class = ...
-
-
-class UpdateProfileAPIView(UpdateAPIView):
-    queryset = User.objects.all()
+    http_method_names = ("patch",)
     permission_classes = (
         IsAuthenticated,
         IsOwnerOrReadOnly,
     )
-    serializer_class = ...
+    serializer_class = ChangePasswordSerializer
+
+
+class UpdateProfileAPIView(UpdateAPIView):
+    queryset = User.objects.all()
+    http_method_names = ("patch",)
+    permission_classes = (
+        IsAuthenticated,
+        IsOwnerOrReadOnly,
+    )
+    serializer_class = UpdateUserSerializer
 
 
 class DeleteProfileAPIView(DestroyAPIView):
